@@ -6,7 +6,7 @@
   "description": "Todo Solidity Smart Contracts demoing integration with Saga Genesis",
   "scripts": {
     "start": "./scripts/ganache.sh",
-    "dapp": "cd dapp && node --max-old-space-size=4096 scripts/start.js",
+    "dapp": "cd dapp && yarn start",
     "test": "truffle compile && truffle test",
     "test-circleci": "truffle compile && truffle test",
     "netlify-build": "./scripts/build.sh",
