@@ -1,0 +1,9 @@
+# You can automatically load this file using direnv: https://direnv.net/
+# or just `source .envrc`
+
+export HDWALLET_MNEMONIC="<YOUR TWELVE WORD MNEMONIC>"
+# export HDWALLET_MNEMONIC_MAINNET="<YOUR TWELVE WORD MNEMONIC>"
+# export REACT_APP_ROPSTEN_PROVIDER_URL=https://ropsten.infura.io/<YOUR INFURA KEY>
+# export REACT_APP_RINKEBY_PROVIDER_URL=https://rinkeby.infura.io/<YOUR INFURA KEY>
+# export REACT_APP_MAINNET_PROVIDER_URL=https://mainnet.infura.io/<YOUR INFURA KEY>
+export REACT_APP_LOCALHOST_PROVIDER_URL=http://localhost:8545

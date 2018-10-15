@@ -1,0 +1,53 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:9.11.1
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+      - image: trufflesuite/ganache-cli
+        command: ganache-cli -i 1234 -e 100000000000 -l 4700038
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}-{{ checksum "dapp/package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: npm i && cd dapp && npm i
+
+      - save_cache:
+          paths:
+            - node_modules
+            - dapp/node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum "dapp/package.json" }}
+
+      # Test!
+      - run: mkdir -p ./test-results/eslint
+      - run: cd dapp && $(npm bin)/eslint src --format junit --output-file ../test-results/eslint/results.xml
+
+      - run: mkdir -p ./test-results/jest
+      - run: cd dapp && npm test
+
+      - run: npm run test-circleci
+
+      - store_artifacts:
+          path: ./test-results
+          destination: tr1
+      - store_test_results:
+          path: ./test-results
